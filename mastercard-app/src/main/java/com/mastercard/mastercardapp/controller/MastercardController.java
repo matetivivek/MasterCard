@@ -11,25 +11,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.mastercard.mastercardapp.resource.CityRoadResource;
+import com.mastercard.mastercardapp.service.MasterCardService;
 
 @Controller
 public class MastercardController {
+
 	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
-	
 	@Autowired
-	private CityRoadResource RoadResource;
-	
+	private MasterCardService masterCardService;
+
 	@GetMapping("/connected")
 	@ResponseBody
-	public ResponseEntity<?> connected(
-			@RequestParam @NotBlank(message = "origin cannot be blank") String origin,
-			@RequestParam @NotBlank(message = "destination cannot be blank") String destination) throws Exception {
-		
-								
-//		LinkedHashMap<String, String> venue = venueManagementService.getVenueByName(venueName, requestedBy, cid, authToken);
+	public ResponseEntity<?> connected(@RequestParam @NotBlank(message = "origin cannot be blank") String origin,
+			@RequestParam @NotBlank(message = "destination cannot be blank") String destination) {
 
-		return ResponseEntity.ok("yes");
+		return ResponseEntity.ok(masterCardService.isConnected(origin, destination));
 	}
 
 }

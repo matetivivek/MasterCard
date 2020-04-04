@@ -1,5 +1,9 @@
 package com.mastercard.mastercardapp.service;
 
-public class MasterCardService {
-
+public interface MasterCardService {
+	
+	
+	
+	String isConnected(String s, String d);
+	
 }
