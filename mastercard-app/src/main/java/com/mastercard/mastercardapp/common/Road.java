@@ -1,15 +1,19 @@
 package com.mastercard.mastercardapp.common;
 
-import java.util.List;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
-@Data
-@AllArgsConstructor
 public class Road {
 	
-	private String source, destination;
+	private String source;
+	private String destination;
 	
-
+	public Road(String source, String destination) {
+		super();
+		this.source = source;
+		this.destination = destination;
+	}
+	public String getSource() {
+		return source;
+	}
+	public String getDestination() {
+		return destination;
+	}
 }

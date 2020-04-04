@@ -13,7 +13,7 @@ public interface RoadMapService {
 
 	void setRoads(List<Road> roads);
 	
-	void setCities(Set<String> v);
+//	void setCities(Set<String> v);
 	
 	
 

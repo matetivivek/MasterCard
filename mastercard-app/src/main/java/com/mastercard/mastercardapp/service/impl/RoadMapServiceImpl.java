@@ -12,7 +12,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,21 +30,17 @@ public class RoadMapServiceImpl implements RoadMapService, Constants {
 
 	private Map<String, LinkedList<String>> adj;
 	
-
-	// Constructor
-	@Override
-	public void setCities(Set<String> cities) {
-		this.CITIES = cities;
-		this.adj = new HashMap<>();
-		cities.forEach(city -> adj.put(city, new LinkedList<>()));
-	}
 	
 	@Override
 	public void setRoads(List<Road> roads) {
+		this.adj = new HashMap<>();
+		CITIES = new HashSet<String>();
 		roads.forEach(road -> {
-			addRoad(road.getSource(), road.getDestination());
-
-		});
+			CITIES.add(road.getSource());
+			CITIES.add(road.getDestination());
+			});
+		CITIES.forEach(city -> adj.put(city, new LinkedList<>()));
+		roads.forEach(road -> addRoad(road.getSource(), road.getDestination()));
 	}
 
 //Function to add road between two cities 
@@ -110,56 +105,26 @@ public class RoadMapServiceImpl implements RoadMapService, Constants {
 
 	}
 
-	public static void main(String args[]) {
-
-		RoadMapServiceImpl g = new RoadMapServiceImpl();
-		Set<String> set = Arrays.asList("Boston", "New York", "Philadelphia", "Newark", "Trenton", "Albany").stream()
-				.collect(Collectors.toSet());
-
-		List<Road> roads = new ArrayList<>();
-
-		roads.add(new Road("Boston", "New York"));
-		roads.add(new Road("Philadelphia", "Newark"));
-		roads.add(new Road("Newark", "Boston"));
-		roads.add(new Road("Trenton", "Albany"));
-		g.setCities(set);
-		g.setRoads(roads);
-
-		System.out.println(g.isReachable("Boston", "Newark"));
-
-		System.out.println(g.isReachable("Boston", "Philadelphia"));
-
-		System.out.println(g.isReachable("Philadelphia", "Albany"));
-	}
-
-	private RoadMapServiceImpl() {
+	RoadMapServiceImpl()throws Exception {
 		String fileName = "static/city.txt";
 		List<Road> roads = new ArrayList<>();
-		Set<String> cities = new HashSet<String>();
 		ClassLoader classLoader = ClassLoader.getSystemClassLoader();
 
 		File file = new File(classLoader.getResource(fileName).getFile());
 
 		// File is found
-		LOGGER.error("File Found : " + file.exists());
+		LOGGER.info("File Found : " + file.exists());
 
 		// Read File Content
 		String content = null;
-		try {
 			content = new String(Files.readAllBytes(file.toPath()));
 			String[] paths = content.split("\n");
 			Arrays.stream(paths).forEach(e -> {
 				String[] path = e.split("\\s*,\\s*");
 				roads.add(new Road(path[0], path[1]));
-				cities.addAll(Arrays.asList(path));
 			});
-			cities.forEach(city -> LOGGER.info(city));
 			roads.forEach(road -> LOGGER.info("Road :: " + road.getSource() + "," + road.getDestination()));
-			setCities(cities);
-			setRoads(roads);
-		} catch (IOException e) {
-			LOGGER.error("Loading data from txt failed::" + e.getMessage());
-		}
+			this.setRoads(roads);
 
 	}
 

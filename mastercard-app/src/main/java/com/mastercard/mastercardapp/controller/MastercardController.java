@@ -11,21 +11,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.mastercard.mastercardapp.service.MasterCardService;
+import com.mastercard.mastercardapp.service.RoadMapService;
 
 @Controller
 public class MastercardController {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 	@Autowired
-	private MasterCardService masterCardService;
+	private RoadMapService roadMapService;
 
 	@GetMapping("/connected")
 	@ResponseBody
 	public ResponseEntity<?> connected(@RequestParam @NotBlank(message = "origin cannot be blank") String origin,
 			@RequestParam @NotBlank(message = "destination cannot be blank") String destination) {
 
-		return ResponseEntity.ok(masterCardService.isConnected(origin, destination));
+		return ResponseEntity.ok(roadMapService.isConnected(origin, destination));
 	}
 
 }
