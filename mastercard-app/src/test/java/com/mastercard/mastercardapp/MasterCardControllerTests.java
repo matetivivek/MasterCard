@@ -21,7 +21,7 @@ import com.mastercard.mastercardapp.service.RoadMapService;
 
 @SpringBootTest
 @TestInstance(Lifecycle.PER_CLASS)
-public class MastercardControllerTests implements Constants{
+public class MasterCardControllerTests implements Constants{
 	
 	@InjectMocks
 	MastercardController mastercardController = new MastercardController();
@@ -49,5 +49,5 @@ public class MastercardControllerTests implements Constants{
 				get("/connected?origin=" + origin + "&destination=" + destination))
 				.andExpect(status().is(200)).andReturn();
 	}
-
+	
 }

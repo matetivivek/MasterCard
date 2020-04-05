@@ -11,7 +11,7 @@ public interface RoadMapService {
 
 	String isReachable(String s, String d);
 
-	void setRoads(List<Road> roads);
+	void setUpRoads(List<Road> roads);
 	
 //	void setCities(Set<String> v);
 	
