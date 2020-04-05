@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.mastercard.mastercardapp.common.Road;
 
 @SpringBootTest
-class MastercardApplicationTests {
+class MasterCardApplicationTests {
 	
 private List<Road> roads = new ArrayList<>();
 	

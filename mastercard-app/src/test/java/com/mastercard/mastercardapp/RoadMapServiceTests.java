@@ -35,7 +35,7 @@ public class RoadMapServiceTests implements Constants {
 		roads.add(new Road("F", "G"));
 		//Graph3
 		roads.add(new Road("H", "I"));
-		roadMapService.setRoads(roads);
+		roadMapService.setUpRoads(roads);
 	}
 	
 	
