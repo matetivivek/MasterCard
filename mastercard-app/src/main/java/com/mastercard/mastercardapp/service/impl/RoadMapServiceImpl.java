@@ -25,38 +25,44 @@ import com.mastercard.mastercardapp.service.impl.algorithm.PathFinderAlgorithm;
 public class RoadMapServiceImpl extends PathFinderAlgorithm implements RoadMapService, Constants {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
-	
-	RoadMapServiceImpl()throws Exception {
+	//Contractor
+	private RoadMapServiceImpl() throws Exception {
 		String fileName = "static/city.txt";
+		//Initializing the list for storing pairs
 		List<Road> roads = new ArrayList<>();
 		ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-
+		
 		File file = new File(classLoader.getResource(fileName).getFile());
 
 		// File is found
 		LOGGER.info("File Found : " + file.exists());
 
-		// Read File Content
+		// Read File Content which has pairs of cities
 		String content = null;
-			content = new String(Files.readAllBytes(file.toPath()));
-			String[] paths = content.split("\n");
-			Arrays.stream(paths).forEach(e -> {
-				String[] path = e.split("\\s*,\\s*");
-				roads.add(new Road(path[0], path[1]));
-			});
-			roads.forEach(road -> LOGGER.info("Road :: " + road.getSource() + "," + road.getDestination()));
-			setUpRoads(roads);
+		content = new String(Files.readAllBytes(file.toPath()));
+		//split content by line break
+		String[] paths = content.split("\n");
+		
+		Arrays.stream(paths).forEach(e -> {
+			//split pair which are separated by comma
+			String[] path = e.split("\\s*,\\s*");
+			roads.add(new Road(path[0], path[1]));
+		});
+
+		roads.forEach(road -> LOGGER.info("Road :: " + road.getSource() + "," + road.getDestination()));
+		// setUp the roads between the cities.
+		setUpRoads(roads);
 
 	}
 
 	public String isConnected(String s, String d) {
-		if (!containsCity(s) ) {
+		if (!containsCity(s)) {
 			return NO;
-		}else if(!containsCity(d)){
+		} else if (!containsCity(d)) {
 			return NO;
-		}else{
+		} else {
 			return isReachable(s, d);
-		} 
+		}
 
 	}
 
